@@ -1,0 +1,24 @@
+{
+  "name": "klingon-script",
+  "version": "0.1.0",
+  "description": "Klingon-Script compiler (Klingon-keyword JavaScript) for building web apps",
+  "type": "module",
+  "bin": {
+    "klingon-script": "./src/cli.js"
+  },
+  "scripts": {
+    "build:example": "node ./src/cli.js build ./examples/counter.ks -o ./dist/counter.js --html",
+    "build:warroom": "node ./src/copy-warroom-html.js && node ./src/cli.js build ./examples/warroom/state.ks -o ./dist/warroom/state.js && node ./src/cli.js build ./examples/warroom/ui.ks -o ./dist/warroom/ui.js && node ./src/cli.js build ./examples/warroom/app.ks -o ./dist/warroom/app.js",
+    "check:example": "node ./src/cli.js check ./examples/counter.ks",
+    "check:warroom": "node ./src/cli.js check ./examples/warroom/state.ks && node ./src/cli.js check ./examples/warroom/ui.ks && node ./src/cli.js check ./examples/warroom/app.ks",
+    "test": "node --test"
+  },
+  "keywords": [
+    "klingon",
+    "compiler",
+    "transpiler",
+    "javascript",
+    "web"
+  ],
+  "license": "UNLICENSED"
+}

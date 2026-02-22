@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="tlh">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>yo' mu'mey raQ</title>
+    <style>
+      :root { color-scheme: dark; }
+      body { font-family: Segoe UI, Arial, sans-serif; margin: 0; background: #090d18; color: #f8fafc; font-size: 16px; }
+      .qIj { background: #08090f; color: #ffe4e4; }
+      .raQ { max-width: 1280px; margin: 1rem auto; padding: .75rem; }
+      .raQHead { display: flex; justify-content: space-between; align-items: center; gap: .75rem; margin-bottom: .5rem; }
+      .raQHeadLeft { min-width: 0; }
+      .muQoq { display: none; }
+      .battleShell { display: flex; align-items: stretch; gap: .6rem; width: 100%; }
+      .meydan { flex: 1 1 auto; min-width: 0; position: relative; height: 70vh; min-height: 460px; margin: 0 0 .75rem 0; border-radius: 14px; overflow: hidden; border: 1px solid #4b5f8f; cursor: crosshair; background:
+        linear-gradient(180deg, #050912, #081125 55%, #111827); }
+      .parallaxWrap { position: absolute; inset: 0; overflow: hidden; pointer-events: none; z-index: 0; }
+      .stars { position: absolute; inset: -20% -20% -20% -20%; background-repeat: repeat; will-change: background-position; }
+      .stars.l1 {
+        opacity: .28;
+        background-image:
+          radial-gradient(circle at 31px 19px, rgba(148,163,184,.42) 0 0.5px, transparent 1.2px),
+          radial-gradient(circle at 137px 91px, rgba(100,116,139,.34) 0 0.7px, transparent 1.5px),
+          radial-gradient(circle at 268px 57px, rgba(148,163,184,.26) 0 0.6px, transparent 1.4px);
+        background-size: 337px 241px, 521px 367px, 743px 419px;
+        background-position: 17px 29px, 211px 143px, 401px 73px;
+        animation: starsDriftL1 31s linear infinite;
+      }
+      .stars.l2 {
+        opacity: .36;
+        background-image:
+          radial-gradient(circle at 24px 33px, rgba(148,163,184,.5) 0 0.7px, transparent 1.6px),
+          radial-gradient(circle at 166px 101px, rgba(203,213,225,.42) 0 0.9px, transparent 1.8px),
+          radial-gradient(circle at 319px 74px, rgba(148,163,184,.36) 0 0.8px, transparent 1.7px);
+        background-size: 281px 193px, 409px 283px, 607px 391px;
+        background-position: 9px 61px, 203px 37px, 487px 149px;
+        animation: starsDriftL2 22s linear infinite;
+      }
+      .stars.l3 {
+        opacity: .48;
+        background-image:
+          radial-gradient(circle at 51px 29px, rgba(203,213,225,.62) 0 0.9px, transparent 1.9px),
+          radial-gradient(circle at 192px 117px, rgba(226,232,240,.52) 0 1.1px, transparent 2.2px),
+          radial-gradient(circle at 344px 53px, rgba(241,245,249,.4) 0 1px, transparent 2px);
+        background-size: 239px 167px, 353px 241px, 541px 337px;
+        background-position: 43px 17px, 173px 89px, 389px 211px;
+        animation: starsDriftL3 15s linear infinite;
+      }
+      .stars.l4 {
+        opacity: .62;
+        background-image:
+          radial-gradient(circle at 62px 38px, rgba(241,245,249,.78) 0 1.2px, transparent 2.4px),
+          radial-gradient(circle at 214px 129px, rgba(226,232,240,.68) 0 1.5px, transparent 2.8px),
+          radial-gradient(circle at 388px 85px, rgba(248,250,252,.52) 0 1.3px, transparent 2.5px);
+        background-size: 211px 149px, 313px 227px, 463px 301px;
+        background-position: 59px 23px, 241px 167px, 331px 71px;
+        animation: starsDriftL4 10s linear infinite;
+      }
+      .stars.l5 {
+        opacity: .78;
+        background-image:
+          radial-gradient(circle at 77px 48px, rgba(255,255,255,.92) 0 1.7px, transparent 3px),
+          radial-gradient(circle at 236px 141px, rgba(253,224,71,.68) 0 2px, transparent 3.4px),
+          radial-gradient(circle at 402px 102px, rgba(255,255,255,.78) 0 1.6px, transparent 3px);
+        background-size: 193px 137px, 281px 203px, 419px 293px;
+        background-position: 71px 41px, 199px 119px, 367px 63px;
+        animation: starsDriftL5 6s linear infinite;
+      }
+      .stars.whizz {
+        opacity: .88;
+        background-image:
+          radial-gradient(circle at 190px 120px, var(--whizzA, rgba(255,255,255,.98)) 0 5.2px, transparent 10px),
+          radial-gradient(circle at 710px 360px, var(--whizzB, rgba(253,224,71,.82)) 0 6.4px, transparent 12px);
+        background-size: 1600px 940px, 2200px 1280px;
+        background-position: 137px 89px, 611px 403px;
+        animation: starsWhizz 3s linear infinite;
+      }
+      @keyframes starsDriftL1 {
+        from { background-position: 17px calc(29px + var(--y1, 0px)), 211px calc(143px + var(--y2, 0px)), 401px calc(73px + var(--y3, 0px)); }
+        to { background-position: -320px calc(29px + var(--y1, 0px)), -310px calc(143px + var(--y2, 0px)), -342px calc(73px + var(--y3, 0px)); }
+      }
+      @keyframes starsDriftL2 {
+        from { background-position: 9px calc(61px + var(--y1, 0px)), 203px calc(37px + var(--y2, 0px)), 487px calc(149px + var(--y3, 0px)); }
+        to { background-position: -272px calc(61px + var(--y1, 0px)), -206px calc(37px + var(--y2, 0px)), -120px calc(149px + var(--y3, 0px)); }
+      }
+      @keyframes starsDriftL3 {
+        from { background-position: 43px calc(17px + var(--y1, 0px)), 173px calc(89px + var(--y2, 0px)), 389px calc(211px + var(--y3, 0px)); }
+        to { background-position: -196px calc(17px + var(--y1, 0px)), -180px calc(89px + var(--y2, 0px)), -152px calc(211px + var(--y3, 0px)); }
+      }
+      @keyframes starsDriftL4 {
+        from { background-position: 59px calc(23px + var(--y1, 0px)), 241px calc(167px + var(--y2, 0px)), 331px calc(71px + var(--y3, 0px)); }
+        to { background-position: -152px calc(23px + var(--y1, 0px)), -72px calc(167px + var(--y2, 0px)), -132px calc(71px + var(--y3, 0px)); }
+      }
+      @keyframes starsDriftL5 {
+        from { background-position: 71px calc(41px + var(--y1, 0px)), 199px calc(119px + var(--y2, 0px)), 367px calc(63px + var(--y3, 0px)); }
+        to { background-position: -122px calc(41px + var(--y1, 0px)), -82px calc(119px + var(--y2, 0px)), -52px calc(63px + var(--y3, 0px)); }
+      }
+      @keyframes starsWhizz {
+        from { background-position: 137px calc(89px + var(--wy1, 0px)), 611px calc(403px + var(--wy2, 0px)); }
+        to { background-position: -1463px calc(89px + var(--wy1, 0px)), -1589px calc(403px + var(--wy2, 0px)); }
+      }
+      .overlayTop { display: none; }
+      .statusLine { display: none; }
+      .enemyHud { position: absolute; top: 12px; left: 50%; transform: translateX(-50%); width: min(56%, 560px); pointer-events: none; }
+      .enemyHudLabel { margin: 0 0 .25rem 0; text-align: center; font-size: .75rem; opacity: .9; }
+      .enemyHudBar { height: 10px; background: rgba(12,18,34,.9); border-radius: 999px; overflow: hidden; border: 1px solid rgba(67,84,120,.65); }
+      .enemyHudBar > span { display: block; height: 100%; width: 0%; background: linear-gradient(90deg, #ef4444, #f97316, #facc15); transition: width .2s ease; }
+      .enemyMiniHud { position: absolute; width: 84px; transform: translate(-50%, -50%); pointer-events: none; z-index: 26; opacity: 0; transition: opacity .16s ease; }
+      .enemyMiniHud.show { opacity: 1; }
+      .enemyMiniHudBar { height: 7px; border-radius: 999px; overflow: hidden; background: rgba(10,16,30,.94); border: 1px solid rgba(67,84,120,.68); }
+      .enemyMiniHudBar > span { display: block; height: 100%; width: 0%; background: linear-gradient(90deg, #ef4444, #f97316, #facc15); transition: width .18s ease; }
+      .barWrap { width: 42px; pointer-events: none; display: flex; align-items: center; justify-content: center; }
+      .hudMetric { width: 42px; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: .4rem; }
+      .hudMetric.left { left: auto; }
+      .hudMetric.right { right: auto; }
+      .hudLabel { font-size: .72rem; margin: 0; opacity: .92; writing-mode: vertical-rl; transform: rotate(180deg); }
+      .bIQ { position: relative; width: 12px; height: 82%; background: rgba(39,50,76,.85); border-radius: 999px; overflow: hidden; border: 1px solid rgba(87,110,157,.6); }
+      .bIQ > span { position: absolute; left: 0; right: 0; bottom: 0; display: block; height: 0%; background: linear-gradient(180deg, #4ade80, #eab308, #ef4444); transition: height .2s ease; }
+      .jagh > span { background: linear-gradient(180deg, #22d3ee, #60a5fa, #818cf8); }
+      button { border: 1px solid #6b7fae; border-radius: 8px; padding: .6rem .8rem; background: #334155; color: #fff; cursor: pointer; font-weight: 600; }
+      button:hover { filter: brightness(1.1); }
+      button:disabled { opacity: .45; cursor: not-allowed; }
+      .ship { position: absolute; font-weight: 800; text-shadow: 0 0 12px rgba(255,255,255,.25); user-select: none; }
+      .ship.enemy { top: 22%; left: 50%; transform: translateX(-50%); font-size: 48px; color: #ffe4e6; transition: transform .25s ease, opacity .25s ease; }
+      .ship.player { bottom: 16%; left: 50%; transform: translateX(-50%); font-size: 54px; color: #93c5fd; }
+      .beam { position: absolute; left: 50%; width: 4px; border-radius: 999px; opacity: 0; }
+      .beam.player { bottom: 24%; height: 42%; background: linear-gradient(180deg, #eab308, #f97316); transform: translateX(-50%); }
+      .beam.enemy { top: 30%; height: 40%; background: linear-gradient(180deg, #f43f5e, #fb7185); transform: translateX(-50%); }
+      .beam.fire { animation: fireBeam .26s ease-out; }
+      .fx { position: absolute; top: 38%; left: 50%; transform: translateX(-50%); font-size: 26px; font-weight: 800; color: #fde68a; opacity: 0; pointer-events: none; }
+      .fx.show { animation: fxPop .45s ease-out; }
+      .fx.crit { color: #fb7185; }
+      .resultBanner { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); z-index: 35; font-size: 2rem; font-weight: 800; padding: .55rem .9rem; border-radius: 10px; border: 1px solid rgba(251,113,133,.75); color: #ffe4e6; background: rgba(127,29,29,.65); text-align: center; opacity: 0; pointer-events: none; transition: opacity .18s ease; }
+      .resultBanner.show { opacity: 1; }
+      .roundCue { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); z-index: 36; font-size: 3rem; font-weight: 900; color: #fef08a; text-shadow: 0 0 16px rgba(254,240,138,.65); opacity: 0; pointer-events: none; transition: opacity .12s linear; }
+      .roundCue.show { opacity: 1; }
+      .roundCue.fight { animation: fightFade .76s cubic-bezier(.2,.7,.2,1) forwards; }
+      @keyframes fireBeam { 0% { opacity: 0; } 15% { opacity: 1; } 100% { opacity: 0; } }
+      @keyframes fxPop { 0% { opacity: 0; transform: translate(-50%, 12px) scale(.8); } 25% { opacity: 1; } 100% { opacity: 0; transform: translate(-50%, -18px) scale(1.04); } }
+      @keyframes fightFade {
+        0% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+        55% { opacity: .9; transform: translate(-50%, -50%) scale(1.16); }
+        100% { opacity: 0; transform: translate(-50%, -50%) scale(1.42); }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="raQ">
+      <section class="raQHead">
+        <div class="raQHeadLeft">
+          <h1 id="wr_title">yo' mu'mey raQ</h1>
+          <p id="wr_quote" class="muQoq">Qapla'</p>
+        </div>
+        <button id="wr_btn_lang" title="English/Klingon" aria-label="English/Klingon">EN / tlh</button>
+      </section>
+
+      <div class="battleShell">
+        <div class="barWrap">
+          <div class="hudMetric left">
+            <p id="wr_shield_label" class="hudLabel">Shields</p>
+            <div class="bIQ jagh"><span id="wr_enemy_bar"></span></div>
+          </div>
+        </div>
+
+        <section id="wr_battle" class="meydan" aria-label="battlefield">
+        <div class="parallaxWrap" aria-hidden="true">
+          <div class="stars l1"></div>
+          <div class="stars l2"></div>
+          <div class="stars l3"></div>
+          <div class="stars l4"></div>
+          <div class="stars l5"></div>
+          <div class="stars whizz"></div>
+        </div>
+        <div class="enemyHud">
+          <p id="wr_enemy_health_label" class="enemyHudLabel">Alien Shields</p>
+          <div class="enemyHudBar"><span id="wr_enemy_health_bar"></span></div>
+        </div>
+        <div class="overlayTop">
+          <div id="wr_status_line" class="statusLine">jagh 90/90 | HoS 65/100 | yIn 3 | mI' 0 | wav 1/5 | qam 0.0s | veS | Mouse move, click fire</div>
+        </div>
+        <div id="wr_enemy_ship_hud_1" class="enemyMiniHud"><div class="enemyMiniHudBar"><span id="wr_enemy_ship_bar_1"></span></div></div>
+        <div id="wr_enemy_ship_hud_2" class="enemyMiniHud"><div class="enemyMiniHudBar"><span id="wr_enemy_ship_bar_2"></span></div></div>
+        <div id="wr_fx_text" class="fx">-12</div>
+        <div id="wr_result" class="resultBanner"></div>
+        <div id="wr_round_cue" class="roundCue"></div>
+        </section>
+
+        <div class="barWrap">
+          <div class="hudMetric right">
+            <p id="wr_energy_label" class="hudLabel">Energy</p>
+            <div class="bIQ"><span id="wr_power_bar"></span></div>
+          </div>
+        </div>
+      </div>
+
+    </main>
+
+    <script type="module" src="./warroom/app.js"></script>
+  </body>
+</html>
